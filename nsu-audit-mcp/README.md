@@ -46,9 +46,9 @@ The server runs on port 5000 (or PORT from environment).
 
 3. **Environment Variables** (in Render dashboard):
    - `PORT` = `5000` (or let Render assign)
-   - `GOOGLE_CLIENT_ID` = `871051854278-tgov2na9jbu53n5680n9e3qpdlvh338b.apps.googleusercontent.com`
-   - `GOOGLE_CLIENT_SECRET` = `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`
-   - `JWT_SECRET` = `nsu_audit_jwt_secret_key_2024`
+   - `GOOGLE_CLIENT_ID` = `YOUR_GOOGLE_CLIENT_ID`
+   - `GOOGLE_CLIENT_SECRET` = `YOUR_GOOGLE_CLIENT_SECRET`
+   - `JWT_SECRET` = `YOUR_JWT_SECRET`
 
 4. **After deployment**, update Flutter app's `ApiService.serverUrl` to your Render URL (e.g., `https://nsu-audit.onrender.com`)
 
