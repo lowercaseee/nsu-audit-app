@@ -1,0 +1,602 @@
+[
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-16T09:55:09.289Z",
+    "status": "success"
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-16T09:54:59.996Z",
+    "status": "success"
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-05T11:51:50.649Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-05T11:51:33.185Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-05T11:51:25.962Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "CLI-History",
+    "timestamp": "2026-04-05T11:51:08.051Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-05T11:51:08.038Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-05T11:50:52.550Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-05T11:50:51.914Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-05T10:35:10.542Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-05T10:35:06.106Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-05T10:34:59.753Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-05T10:31:14.806Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-05T10:31:14.280Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-05T10:30:27.477Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-05T10:30:27.126Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-05T10:28:19.757Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-05T10:28:19.198Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T18:26:36.020Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:59:20.340Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:59:19.971Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:53:53.035Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:53:52.719Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:52:55.846Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:52:55.553Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:52:02.598Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:52:02.229Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:50:45.922Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:50:45.599Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:50:05.483Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:50:05.155Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:49:50.085Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:48:17.895Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:45:16.115Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "CLI-History",
+    "timestamp": "2026-04-04T17:27:41.948Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:27:41.938Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:27:33.508Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:27:27.006Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:27:15.614Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:27:10.413Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:27:10.383Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:27:10.350Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "CLI-History",
+    "timestamp": "2026-04-04T17:23:33.209Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:23:33.198Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T17:23:23.710Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:23:01.774Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:23:01.753Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:23:01.724Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T17:17:00.907Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T17:16:56.277Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T16:46:14.265Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T16:46:13.112Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T16:46:11.696Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T15:57:11.496Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "system",
+    "timestamp": "2026-04-04T15:57:06.231Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:56:33.046Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:56:21.193Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:56:20.972Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:56:18.099Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T15:55:20.768Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T15:54:44.692Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:54:30.114Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:28.748Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:28.738Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:28.222Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:28.213Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:27.649Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:27.639Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:27.031Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:27.020Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:26.211Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:21:26.201Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:20:59.829Z",
+    "success": true
+  },
+  {
+    "endpoint": "GET /api-history",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T15:20:59.818Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T15:20:55.032Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T15:16:51.390Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T15:14:36.775Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T15:12:42.951Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T15:12:42.949Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T14:56:35.566Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T14:56:35.564Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T14:56:32.610Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T14:56:32.607Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T14:39:58.732Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T14:39:58.729Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T14:38:12.114Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-04T14:38:04.046Z",
+    "success": false
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-04T14:37:45.012Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-03T18:09:52.421Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-03T18:04:34.531Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-03T18:03:41.237Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-03T18:03:30.514Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-03T17:58:43.717Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-03T17:57:05.402Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-03T17:56:52.081Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-03T17:56:19.503Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-03T17:41:21.950Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /auth/google",
+    "user": "shadeed.mahbub.253@northsouth.edu",
+    "timestamp": "2026-04-03T17:41:21.111Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-03T17:41:10.062Z",
+    "success": true
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "unknown",
+    "timestamp": "2026-04-03T17:41:09.744Z",
+    "success": true
+  }
+]

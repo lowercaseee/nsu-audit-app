@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#003366">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>NSU Audit</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; min-height: 100vh; }
+    
+    .container { min-height: 100vh; display: flex; flex-direction: column; }
+    
+    /* Header */
+    .header { background: #003366; padding: 20px; padding-top: 48px; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 20px; font-weight: 700; }
+    .header .email { font-size: 12px; opacity: 0.7; }
+    
+    /* Logo */
+    .logo { width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; }
+    
+    /* Content */
+    .content { flex: 1; padding: 24px; }
+    
+    /* Cards */
+    .card { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    
+    /* Buttons */
+    .btn { padding: 16px; border-radius: 12px; text-align: center; font-size: 16px; font-weight: 600; margin-bottom: 12px; cursor: pointer; border: none; width: 100%; }
+    .btn-primary { background: #003366; color: #fff; }
+    .btn-secondary { background: #fff; border: 2px solid #e2e8f0; color: #003366; }
+    .btn-danger { background: #fee2e2; color: #dc2626; }
+    .btn:disabled { opacity: 0.6; }
+    
+    /* Inputs */
+    input { width: 100%; padding: 16px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; margin-bottom: 12px; background: #f8fafc; }
+    
+    /* Status */
+    .status { text-align: center; padding: 24px; }
+    .status-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+    .status-ok { background: #22c55e; }
+    .status-error { background: #dc2626; }
+    
+    /* Results */
+    .result-card { padding: 24px; border-radius: 16px; margin-bottom: 16px; }
+    .result-success { background: #dcfce7; }
+    .result-fail { background: #fee2e2; }
+    .result-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .result-student { font-size: 18px; font-weight: 600; }
+    .result-id { font-size: 14px; color: #64748b; }
+    
+    /* Sections */
+    .section { margin-bottom: 24px; }
+    .section-title { font-size: 14px; font-weight: 600; color: #64748b; text-transform: uppercase; margin-bottom: 8px; }
+    .row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+    .row:last-child { border: none; }
+    .row-label { color: #64748b; }
+    .row-value { font-weight: 600; }
+    
+    /* Course list */
+    .course-row { display: flex; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+    .course-code { flex: 1; font-weight: 500; }
+    .course-grade { width: 50px; text-align: center; }
+    .course-credits { width: 50px; text-align: right; color: #64748b; }
+    
+    /* History */
+    .history-item { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 12px; border-left: 4px solid #22c55e; }
+    .history-item.fail { border-left-color: #dc2626; }
+    .history-endpoint { font-weight: 600; margin-bottom: 4px; }
+    .history-time { font-size: 12px; color: #64748b; }
+    
+    /* Nav */
+    .nav { display: flex; background: #fff; border-top: 1px solid #e2e8f0; }
+    .nav-item { flex: 1; padding: 16px; text-align: center; color: #003366; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .nav-item:active { background: #f8fafc; }
+    
+    /* Loading */
+    .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px; }
+    .spinner { width: 40px; height: 40px; border: 3px solid #e2e8f0; border-top-color: #003366; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    /* Screens */
+    .screen { display: none; min-height: 100vh; flex-direction: column; }
+    .screen.active { display: flex; }
+    
+    /* Helper */
+    .text-center { text-align: center; }
+    .text-muted { color: #64748b; }
+    .mt-16 { margin-top: 16px; }
+    .mb-16 { margin-bottom: 16; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Login Screen -->
+    <div id="screen-login" class="screen active">
+      <div style="padding: 48px 24px 24px;">
+        <div class="logo" style="width: 72px; height: 72px; font-size: 32px; margin: 0 auto 16px;">N</div>
+        <h1 class="text-center" style="margin-bottom: 4px;">NSU Audit</h1>
+        <p class="text-center text-muted">Student Audit System</p>
+      </div>
+      
+      <div class="card" style="margin: 0 24px;">
+        <p class="text-muted mb-16">Server URL</p>
+        <input type="text" id="server-url" value="http://192.168.0.184:5000" placeholder="http://192.168.x.x:5000">
+        
+        <button class="btn btn-primary" id="btn-login" onclick="handleLogin()">Sign in with Google</button>
+        <button class="btn btn-secondary" onclick="handleDemo()">Try Demo Data</button>
+      </div>
+      
+      <p class="text-center text-muted mt-16">Only @northsouth.edu emails allowed</p>
+    </div>
+    
+    <!-- Home Screen -->
+    <div id="screen-home" class="screen">
+      <div class="header">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div class="logo">N</div>
+          <div>
+            <h1>NSU Audit</h1>
+            <p class="email" id="user-email">user@northsouth.edu</p>
+          </div>
+        </div>
+        <button onclick="showScreen('settings')" style="background: none; border: none; color: #fff; font-size: 24px;">⚙</button>
+      </div>
+      
+      <div class="content">
+        <div id="home-content">
+          <p class="text-center text-muted mb-16">Upload your transcript to audit</p>
+          <button class="btn btn-primary" onclick="handleCapture()">Capture Transcript</button>
+          <button class="btn btn-secondary" onclick="handleDemo()">Use Demo Data</button>
+        </div>
+        
+        <div id="home-loading" class="loading" style="display: none;">
+          <div class="spinner"></div>
+          <p id="loading-status" class="text-muted mt-16">Processing...</p>
+        </div>
+      </div>
+      
+      <div class="nav">
+        <div class="nav-item" onclick="showScreen('certificates')">Certificates</div>
+        <div class="nav-item" onclick="showScreen('history')">History</div>
+        <div class="nav-item" onclick="handleLogout()">Logout</div>
+      </div>
+    </div>
+    
+    <!-- Result Screen -->
+    <div id="screen-result" class="screen">
+      <div class="header">
+        <button onclick="showScreen('home')" style="background: none; border: none; color: #fff; font-size: 16px;">← Back</button>
+        <h1>Audit Result</h1>
+        <button onclick="handleLogout()" style="background: none; border: none; color: #fff; font-size: 16px;">Logout</button>
+      </div>
+      
+      <div class="content" id="result-content">
+        <!-- Results rendered here -->
+      </div>
+    </div>
+    
+    <!-- History Screen -->
+    <div id="screen-history" class="screen">
+      <div class="header">
+        <button onclick="showScreen('home')" style="background: none; border: none; color: #fff; font-size: 16px;">← Back</button>
+        <h1>History</h1>
+        <div style="width: 50px;"></div>
+      </div>
+      
+      <div class="content" id="history-content">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+    
+    <!-- Certificates Screen -->
+    <div id="screen-certificates" class="screen">
+      <div class="header">
+        <button onclick="showScreen('home')" style="background: none; border: none; color: #fff; font-size: 16px;">← Back</button>
+        <h1>Certificates</h1>
+        <div style="width: 50px;"></div>
+      </div>
+      
+      <div class="content" id="certificates-content">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+    
+    <!-- Settings Screen -->
+    <div id="screen-settings" class="screen">
+      <div class="header">
+        <button onclick="showScreen('home')" style="background: none; border: none; color: #fff; font-size: 16px;">← Back</button>
+        <h1>Settings</h1>
+        <div style="width: 50px;"></div>
+      </div>
+      
+      <div class="content">
+        <div class="card">
+          <p class="text-muted mb-16">Server URL</p>
+          <input type="text" id="settings-server-url" value="http://192.168.0.184:5000">
+          <button class="btn btn-primary" onclick="saveSettings()">Save</button>
+        </div>
+        
+        <button class="btn btn-danger" onclick="handleLogout()">Logout</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // State
+    let state = {
+      apiKey: localStorage.getItem('apiKey') || null,
+      user: localStorage.getItem('user') || 'anonymous',
+      serverUrl: localStorage.getItem('serverUrl') || 'http://192.168.0.184:5000'
+    };
+    
+// Initialize
+    document.getElementById('server-url').value = state.serverUrl;
+    document.getElementById('settings-server-url').value = state.serverUrl;
+    
+    if (state.apiKey) {
+      document.getElementById('user-email').textContent = state.apiKey.substring(0, 20) + '...';
+      showScreen('home');
+    }
+    
+    // Navigation
+    function showScreen(screen) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + screen).classList.add('active');
+      
+      if (screen === 'history') loadHistory();
+      if (screen === 'certificates') loadCertificates();
+    }
+    
+    // API
+    async function api(endpoint, options = {}) {
+      const url = state.serverUrl + endpoint;
+      const headers = { 'Content-Type': 'application/json' };
+      if (state.apiKey) headers['x-api-key'] = state.apiKey;
+      
+      const response = await fetch(url, { ...options, headers: { ...headers, ...options.headers } });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ detail: 'Request failed' }));
+        throw new Error(err.detail || 'Request failed');
+      }
+      return response.json();
+    }
+    
+    // Login
+    async function handleLogin() {
+      const serverUrl = document.getElementById('server-url').value;
+      state.serverUrl = serverUrl;
+      localStorage.setItem('serverUrl', serverUrl);
+      
+      try {
+        const data = await api('/generate-key', { method: 'POST', body: JSON.stringify({ name: 'mobile-user' }) });
+        state.apiKey = data.apiKey;
+        state.user = 'mobile-user';
+        localStorage.setItem('apiKey', data.apiKey);
+        localStorage.setItem('user', 'mobile-user');
+        document.getElementById('user-email').textContent = data.apiKey.substring(0, 20) + '...';
+        showScreen('home');
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
+    }
+    
+    // Demo
+    async function handleDemo() {
+      showLoading(true, 'Loading demo data...');
+      try {
+        const result = await api('/process-transcript', { method: 'POST', body: JSON.stringify({}) });
+        renderResult(result);
+        showScreen('result');
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
+      showLoading(false);
+    }
+    
+    // Capture
+    async function handleCapture() {
+      // Use file input as fallback
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = async () => {
+          showLoading(true, 'Processing image...');
+          try {
+            const base64 = reader.result.split(',')[1];
+            const result = await api('/process-transcript', { 
+              method: 'POST', 
+              body: JSON.stringify({ image: 'data:image/jpeg;base64,' + base64 }) 
+            });
+            renderResult(result);
+            showScreen('result');
+          } catch (err) {
+            alert('Error: ' + err.message);
+          }
+          showLoading(false);
+        };
+        reader.readAsDataURL(file);
+      };
+      input.click();
+    }
+    
+    // Render Result
+    function renderResult(result) {
+      const html = `
+        <div class="result-card ${result.result === 'GRADUATED' ? 'result-success' : 'result-fail'}">
+          <div class="result-title">${result.result}</div>
+          <div class="result-student">${result.student?.name}</div>
+          <div class="result-id">ID: ${result.student?.id}</div>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">Level 1: Credits</div>
+          <div class="card">
+            <div class="row"><span class="row-label">Total Credits</span><span class="row-value">${result.audit?.level1?.totalCredits}</span></div>
+            <div class="row"><span class="row-label">Valid Courses</span><span class="row-value">${result.audit?.level1?.valid}</span></div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">Level 2: CGPA</div>
+          <div class="card">
+            <div class="row"><span class="row-label">CGPA</span><span class="row-value">${result.audit?.level2?.cgpa}</span></div>
+            <div class="row"><span class="row-label">Credits</span><span class="row-value">${result.audit?.level2?.credits}</span></div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">Level 3: Eligibility</div>
+          <div class="card">
+            <div class="row"><span class="row-label">Eligible</span><span class="row-value" style="color: ${result.audit?.level3?.eligible ? '#22c55e' : '#dc2626'}">${result.audit?.level3?.eligible ? 'YES' : 'NO'}</span></div>
+            <div class="row"><span class="row-label">Credit Deficit</span><span class="row-value">${result.audit?.level3?.creditDeficit}</span></div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">Courses (${result.courses?.length || 0})</div>
+          <div class="card">
+            ${(result.courses || []).slice(0, 10).map(c => `
+              <div class="course-row">
+                <span class="course-code">${c.code}</span>
+                <span class="course-grade">${c.grade}</span>
+                <span class="course-credits">${c.credits}</span>
+              </div>
+            `).join('')}
+            ${result.courses?.length > 10 ? '<p class="text-center text-muted mt-16">+ ' + (result.courses.length - 10) + ' more</p>' : ''}
+          </div>
+        </div>
+      `;
+      document.getElementById('result-content').innerHTML = html;
+    }
+    
+    // Load History
+    async function loadHistory() {
+      try {
+        const data = await api('/api-history');
+        const html = data.history?.length ? data.history.map(h => `
+          <div class="history-item ${h.status === 'failed' ? 'fail' : ''}">
+            <div class="history-endpoint">${h.endpoint}</div>
+            <div class="history-time">${new Date(h.timestamp).toLocaleString()}</div>
+          </div>
+        `).join('') : '<p class="text-center text-muted">No history yet</p>';
+        document.getElementById('history-content').innerHTML = html;
+      } catch (e) {
+        document.getElementById('history-content').innerHTML = '<p class="text-center text-muted">Error loading history</p>';
+      }
+    }
+    
+    // Load Certificates
+    async function loadCertificates() {
+      try {
+        const data = await api('/certificates');
+        const html = data.certificates?.length ? data.certificates.map(c => `
+          <div class="card" style="display: flex; align-items: center;">
+            <span style="font-size: 32px; margin-right: 12px;">📜</span>
+            <div style="flex: 1;">
+              <div style="font-weight: 600;">${c.filename}</div>
+              <div class="text-muted" style="font-size: 12px;">${new Date(c.timestamp).toLocaleDateString()}</div>
+            </div>
+          </div>
+        `).join('') : '<p class="text-center text-muted">No certificates yet</p>';
+        document.getElementById('certificates-content').innerHTML = html;
+      } catch (e) {
+        document.getElementById('certificates-content').innerHTML = '<p class="text-center text-muted">Error loading certificates</p>';
+      }
+    }
+    
+    // Loading
+    function showLoading(show, status) {
+      document.getElementById('home-content').style.display = show ? 'none' : 'block';
+      document.getElementById('home-loading').style.display = show ? 'flex' : 'none';
+      document.getElementById('loading-status').textContent = status || '';
+    }
+    
+    // Settings
+    async function saveSettings() {
+      const url = document.getElementById('settings-server-url').value;
+      state.serverUrl = url;
+      localStorage.setItem('serverUrl', url);
+      document.getElementById('server-url').value = url;
+      // Generate new API key for new server
+      try {
+        const data = await api('/generate-key', { method: 'POST', body: JSON.stringify({ name: 'mobile-user' }) });
+        state.apiKey = data.apiKey;
+        localStorage.setItem('apiKey', data.apiKey);
+        document.getElementById('user-email').textContent = data.apiKey.substring(0, 20) + '...';
+      } catch (e) {
+        console.log('Using existing key');
+      }
+      alert('Settings saved');
+      showScreen('home');
+    }
+    
+    // Logout
+    function handleLogout() {
+      state.apiKey = null;
+      state.user = null;
+      localStorage.removeItem('apiKey');
+      localStorage.removeItem('user');
+      showScreen('login');
+    }
+  </script>
+</body>
+</html>

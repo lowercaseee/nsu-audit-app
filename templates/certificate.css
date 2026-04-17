@@ -1,0 +1,296 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Times New Roman', Times, serif;
+  background: #fff;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.certificate-wrapper {
+  width: 1123px;
+  height: 794px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.certificate-border {
+  width: 100%;
+  height: 100%;
+  border: 3px double #003366;
+  padding: 8px;
+}
+
+.certificate-inner-border {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #003366;
+  padding: 40px 50px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.certificate-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #003366;
+}
+
+.certificate-corner-tl {
+  top: 15px;
+  left: 15px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.certificate-corner-tr {
+  top: 15px;
+  right: 15px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.certificate-corner-bl {
+  bottom: 15px;
+  left: 15px;
+  border-right: none;
+  border-top: none;
+}
+
+.certificate-corner-br {
+  bottom: 15px;
+  right: 15px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Header */
+.certificate-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-section {
+  margin-bottom: 8px;
+}
+
+.nsu-logo {
+  width: 80px;
+  height: 80px;
+}
+
+.header-text {
+  text-align: center;
+}
+
+.header-text h1 {
+  font-size: 28pt;
+  font-weight: bold;
+  color: #003366;
+  letter-spacing: 3px;
+}
+
+.header-text .location {
+  font-size: 11pt;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Title */
+.certificate-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.certificate-title h2 {
+  font-size: 22pt;
+  font-weight: bold;
+  color: #003366;
+  letter-spacing: 8px;
+}
+
+.certificate-title h3 {
+  font-size: 12pt;
+  font-weight: normal;
+  color: #666;
+  margin: 6px 0;
+}
+
+.certificate-title h4 {
+  font-size: 16pt;
+  font-weight: bold;
+  color: #003366;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+}
+
+/* Certify */
+.certify-section {
+  margin-bottom: 12px;
+}
+
+.certify-section p {
+  font-size: 13pt;
+  color: #333;
+}
+
+/* Student */
+.student-section {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.student-section .student-name {
+  font-size: 28pt;
+  font-weight: bold;
+  color: #003366;
+  font-family: 'Georgia', serif;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 6px;
+}
+
+.student-section .student-id {
+  font-size: 10pt;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Completion */
+.completion-section {
+  margin-bottom: 14px;
+}
+
+.completion-section p {
+  font-size: 12pt;
+  color: #333;
+}
+
+/* Program */
+.program-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.program-section .program-name {
+  font-size: 20pt;
+  font-weight: bold;
+  color: #003366;
+}
+
+.program-section .program-degree {
+  font-size: 11pt;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Details */
+.details-section {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 25px;
+}
+
+.detail-box {
+  text-align: center;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  min-width: 120px;
+}
+
+.detail-box .label {
+  display: block;
+  font-size: 9pt;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.detail-box .value {
+  display: block;
+  font-size: 18pt;
+  font-weight: bold;
+  color: #003366;
+  margin-top: 4px;
+}
+
+/* Footer */
+.certificate-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto;
+  padding: 0 20px;
+}
+
+.signature-box {
+  text-align: center;
+  width: 200px;
+}
+
+.signature-line {
+  height: 45px;
+  border-bottom: 1px solid #333;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.signature-img {
+  max-height: 40px;
+  max-width: 150px;
+}
+
+.signature-name {
+  font-size: 11pt;
+  font-weight: bold;
+  color: #333;
+}
+
+.signature-title {
+  font-size: 9pt;
+  color: #666;
+}
+
+/* Meta */
+.certificate-meta {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.certificate-meta p {
+  font-size: 9pt;
+  color: #999;
+}
+
+/* Print */
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .certificate-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+  
+  .certificate-border,
+  .certificate-inner-border {
+    border: none;
+  }
+}

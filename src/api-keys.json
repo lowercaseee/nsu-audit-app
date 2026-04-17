@@ -1,0 +1,20 @@
+[
+  {
+    "key": "7d916beb973dc728d4b791a423eb45be5df3786db5e242aaf339b2a52f0aab33",
+    "name": "Test Key",
+    "created": "2026-04-03T16:56:49.980Z",
+    "active": true
+  },
+  {
+    "key": "cc0c3d698e11c9cf7fb9d872d68e17f7fd6394ed119fd303d8bb8914945786cd",
+    "name": "CLI",
+    "created": "2026-04-03T16:58:01.927Z",
+    "active": true
+  },
+  {
+    "key": "687578c5169dfcf9a8b0fdae8417191e6f21e2ab6585d19f503999935622e259",
+    "name": "CLI",
+    "created": "2026-04-03T17:07:16.723Z",
+    "active": true
+  }
+]

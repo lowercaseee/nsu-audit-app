@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate of Completion</title>
+  <link rel="stylesheet" href="certificate.css">
+</head>
+<body>
+  <div class="certificate-wrapper">
+    <div class="certificate-border">
+      <div class="certificate-inner-border">
+        <div class="certificate-corner certificate-corner-tl"></div>
+        <div class="certificate-corner certificate-corner-tr"></div>
+        <div class="certificate-corner certificate-corner-bl"></div>
+        <div class="certificate-corner certificate-corner-br"></div>
+        
+        <div class="certificate-header">
+          <div class="logo-section">
+            <img src="{{logo_url}}" alt="NSU Logo" class="nsu-logo">
+          </div>
+          <div class="header-text">
+            <h1>NORTH SOUTH UNIVERSITY</h1>
+            <p class="location">Dhaka, Bangladesh</p>
+          </div>
+        </div>
+
+        <div class="certificate-title">
+          <h2>CERTIFICATE</h2>
+          <h3>OF</h3>
+          <h4>{{certificate_type}}</h4>
+        </div>
+
+        <div class="certify-section">
+          <p>This is to certify that</p>
+        </div>
+
+        <div class="student-section">
+          <h5 class="student-name">{{name}}</h5>
+          <p class="student-id">Student ID: {{id}}</p>
+        </div>
+
+        <div class="completion-section">
+          <p>has successfully completed all requirements for</p>
+        </div>
+
+        <div class="program-section">
+          <h6 class="program-name">{{program}}</h6>
+          <p class="program-degree">{{degree}}</p>
+        </div>
+
+        <div class="details-section">
+          <div class="detail-box">
+            <span class="label">Credits Earned</span>
+            <span class="value">{{credits_earned}}</span>
+          </div>
+          <div class="detail-box">
+            <span class="label">CGPA</span>
+            <span class="value">{{gpa}}</span>
+          </div>
+          <div class="detail-box">
+            <span class="label">Date</span>
+            <span class="value">{{completion_date}}</span>
+          </div>
+        </div>
+
+        <div class="certificate-footer">
+          <div class="signature-left">
+            <div class="signature-box">
+              <div class="signature-line">
+                <img src="{{registrar_signature}}" alt="Registrar" class="signature-img">
+              </div>
+              <p class="signature-name">Registrar</p>
+              <p class="signature-title">North South University</p>
+            </div>
+          </div>
+          
+          <div class="signature-right">
+            <div class="signature-box">
+              <div class="signature-line">
+                <img src="{{dean_signature}}" alt="Dean" class="signature-img">
+              </div>
+              <p class="signature-name">{{dean_name}}</p>
+              <p class="signature-title">Dean, {{school}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="certificate-meta">
+          <p>Certificate ID: {{certificate_id}} | Verify: www.nsu.ac.bd/verify/{{verification_code}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

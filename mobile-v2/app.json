@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "NSU Audit",
+    "slug": "nsu-audit-mobile-v2",
+    "version": "2.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "nsuaudit",
+    "splash": {
+      "backgroundColor": "#003366"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nsu.audit.mobile"
+    },
+    "android": {
+      "package": "com.nsu.audit.mobile"
+    }
+  }
+}

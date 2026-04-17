@@ -1,0 +1,26 @@
+[
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "mobile-user",
+    "timestamp": "2026-04-16T23:57:35.208115",
+    "status": "success"
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "mobile-user",
+    "timestamp": "2026-04-16T23:57:30.148756",
+    "status": "success"
+  },
+  {
+    "endpoint": "POST /process-transcript",
+    "user": "test",
+    "timestamp": "2026-04-16T23:55:22.776899",
+    "status": "success"
+  },
+  {
+    "endpoint": "POST /generate-key",
+    "user": "test",
+    "timestamp": "2026-04-16T23:55:16.430263",
+    "status": "success"
+  }
+]
