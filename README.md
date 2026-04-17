@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NSU Audit System - Quick Start
 
 ## One-Click Start
@@ -66,3 +67,6 @@ npm run dev
 - **MongoDB not starting**: Make sure MongoDB is installed
 - **Port already in use**: Close other applications using ports 3000 or 5173
 - **Login not working**: Ensure you're using @northsouth.edu email
+=======
+# nsu-audit
+>>>>>>> f8b36b1a8532b9cc429a77aff356eae2b7ee971b
