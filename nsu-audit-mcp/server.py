@@ -35,7 +35,7 @@ GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "871051854278-tgov2na9jbu53n568
 JWT_SECRET = os.getenv("JWT_SECRET", "nsu-audit-secret-key-change-in-production")
 JWT_ALGORITHM = "HS256"
 
-DATA_DIR = Path(__file__).parent.parent / "app"
+DATA_DIR = Path(__file__).parent.parent
 USERS_FILE = DATA_DIR / "users.json"
 
 api_keys = {}
