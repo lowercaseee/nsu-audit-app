@@ -235,10 +235,12 @@ async def process_transcript(
             result = AuditService.build_result({"courses": req.courses, "student": {"name": student_name, "id": "000000"}}, audit)
         elif req.image:
             try:
-                ocr_result = OCRService.extract_from_image(req.image)
+                # Use async OCR
+                ocr_result = await OCRService.extract_from_image(req.image)
                 if ocr_result and ocr_result.get('courses'):
                     courses = ocr_result['courses']
-                    student_name = extract_name_from_text(ocr_result.get('text', ''))
+                    raw_text = ocr_result.get('raw_text', '')
+                    student_name = extract_name_from_text(raw_text)
                     audit = AuditService.audit_courses(courses)
                     result = AuditService.build_result({"courses": courses, "student": {"name": student_name, "id": "000000"}}, audit)
                 else:
