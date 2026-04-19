@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "757554041588",
+    "project_id": "nsu-audit-8267b",
+    "storage_bucket": "nsu-audit-8267b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757554041588:android:82b921cc944e903313c388",
+        "android_client_info": {
+          "package_name": "com.nsu.audit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757554041588-a4romfubu1ev5pstr64eoe2606ore30n.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "757554041588-v0tq8boq638kf46r5n5gla9mp62v5jqg.apps.googleusercontent.com",
+          "client_type": 1
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjOLRUBsSsJWMcuDBfxFNG0I8OyN8mW24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757554041588-a4romfubu1ev5pstr64eoe2606ore30n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "2"
+}

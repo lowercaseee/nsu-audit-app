@@ -16,12 +16,45 @@ class NSUAuditApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'NSU Audit',
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
         primaryColor: const Color(0xFF003366),
         scaffoldBackgroundColor: const Color(0xFFF8FAFC),
         useMaterial3: true,
+        brightness: Brightness.light,
       ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.deepOrange,
+        primaryColor: const Color(0xFF003366),
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF1E1E1E),
+          foregroundColor: Colors.white,
+        ),
+        cardTheme: const CardThemeData(
+          color: Color(0xFF1E1E1E),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF003366),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0xFF2C2C2C),
+        ),
+      ),
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        '/home': (context) => const HomeScreen(),
+        '/result': (context) => const ResultScreen(),
+        '/history': (context) => const HistoryScreen(),
+        '/certificates': (context) => const CertificatesScreen(),
+        '/settings': (context) => const SettingsScreen(),
+      },
       home: const LoginScreen(),
     );
   }
@@ -168,23 +201,28 @@ class Certificate {
 
 // API Service
 class ApiService {
-  static String serverUrl = 'http://192.168.0.184:5000';
+  static String serverUrl = 'https://nsu-audit-app-8nj0.onrender.com';
   static String? apiKey;
   static final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId: '871051854278-tgov2na9jbu53n5680n9e3qpdlvh338b.apps.googleusercontent.com',
-    serverClientId: '871051854278-tgov2na9jbu53n5680n9e3qpdlvh338b.apps.googleusercontent.com',
+    clientId: '757554041588-v0tq8boq638kf46r5n5gla9mp62v5jqg.apps.googleusercontent.com',
+    serverClientId: '757554041588-a4romfubu1ev5pstr64eoe2606ore30n.apps.googleusercontent.com',
     scopes: ['email', 'profile'],
   );
 
   static Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
-    serverUrl = prefs.getString('serverUrl') ?? 'http://192.168.0.184:5000';
+    serverUrl = prefs.getString('serverUrl') ?? 'https://nsu-audit-app-8nj0.onrender.com';
     apiKey = prefs.getString('apiKey');
   }
 
   static Future<void> loginWithGoogle() async {
     try {
-      final GoogleSignInAccount? account = await _googleSignIn.signIn();
+      final GoogleSignInAccount? account;
+      try {
+        account = await _googleSignIn.signIn();
+      } catch (e) {
+        throw Exception('Google Sign In not available. Check Google Services configuration.');
+      }
       if (account == null) {
         throw Exception('Google sign in cancelled');
       }
@@ -328,7 +366,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _loading = true);
     try {
       await ApiService.setServerUrl(_serverController.text);
-      await ApiService.loginWithGoogle();
+      // Skip Google auth for testing - go directly to home
       if (mounted) Navigator.pushReplacementNamed(context, '/home');
     } catch (e) {
       if (mounted) {
@@ -360,16 +398,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16),
               const Text('NSU Audit', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
               const Text('Student Audit System', style: TextStyle(color: Colors.grey)),
-              const SizedBox(height: 32),
-              TextField(
-                controller: _serverController,
-                decoration: InputDecoration(
-                  labelText: 'Server URL',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                  filled: true, fillColor: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 48),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
@@ -378,11 +407,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   icon: const Icon(Icons.login, color: Colors.white),
                   label: _loading
                       ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text('Sign In with Google', style: TextStyle(fontSize: 16, color: Colors.white)),
+                      : const Text('Continue', style: TextStyle(fontSize: 16, color: Colors.white)),
                 ),
               ),
               const SizedBox(height: 24),
-              const Text('Only @northsouth.edu emails allowed', style: TextStyle(color: Colors.grey, fontSize: 12)),
+              const Text('Test Mode - No Authentication', style: TextStyle(color: Colors.grey, fontSize: 12)),
             ],
           ),
         ),
@@ -715,18 +744,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final _serverController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _serverController.text = ApiService.serverUrl;
-  }
-
   Future<void> _save() async {
-    await ApiService.setServerUrl(_serverController.text);
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Settings saved')));
       Navigator.pop(context);
     }
   }
@@ -740,9 +759,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Server URL', style: TextStyle(fontWeight: FontWeight.w600)),
+            const Text('App Version', style: TextStyle(fontWeight: FontWeight.w600)),
             const SizedBox(height: 8),
-            TextField(controller: _serverController, decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), filled: true, fillColor: Colors.white)),
+            const Text('1.0.0', style: TextStyle(color: Colors.grey)),
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,

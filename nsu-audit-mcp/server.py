@@ -96,7 +96,7 @@ class GenerateKeyRequest(BaseModel):
 
 @app.get("/test")
 def health_check():
-    return {"status": "ok", "message": "Server working"}
+    return {"status": "ok", "message": "Server working", "time": str(datetime.now())}
 
 
 async def verify_google_token(access_token: str):
