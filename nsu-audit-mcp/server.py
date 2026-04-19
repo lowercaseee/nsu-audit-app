@@ -228,21 +228,20 @@ async def process_transcript(
             user = "test-user"
         
         result = None
-        student_name = "Student"
         
         if req.courses and isinstance(req.courses, list):
             audit = AuditService.audit_courses(req.courses)
-            result = AuditService.build_result({"courses": req.courses, "student": {"name": student_name, "id": "000000"}}, audit)
+            result = AuditService.build_result({"courses": req.courses, "student": {"name": "NSU Student", "id": "123456"}}, audit)
         elif req.image:
             try:
-                # Use async OCR
                 ocr_result = await OCRService.extract_from_image(req.image)
-                if ocr_result and ocr_result.get('courses'):
+                if ocr_result and ocr_result.get('courses') and len(ocr_result['courses']) > 0:
                     courses = ocr_result['courses']
-                    raw_text = ocr_result.get('raw_text', '')
-                    student_name = extract_name_from_text(raw_text)
+                    student_info = ocr_result.get('student', {})
+                    student_name = student_info.get('name', 'NSU Student')
+                    student_id = student_info.get('id', '123456')
                     audit = AuditService.audit_courses(courses)
-                    result = AuditService.build_result({"courses": courses, "student": {"name": student_name, "id": "000000"}}, audit)
+                    result = AuditService.build_result({"courses": courses, "student": {"name": student_name, "id": student_id}}, audit)
                 else:
                     result = AuditService.get_demo_result()
             except Exception as e:
@@ -264,15 +263,6 @@ async def process_transcript(
         result = AuditService.get_demo_result()
         HistoryService.log("POST /process-transcript", "test-user", True)
         return {**result, "certificate": {"filename": "error_fallback.pdf"}}
-
-def extract_name_from_text(text):
-    """Try to extract student name from text"""
-    lines = text.split('\n')
-    for line in lines[:5]:
-        line = line.strip()
-        if len(line) > 3 and len(line) < 50 and line.isalpha():
-            return line.title()
-    return "Student"
 
 
 @app.get("/")

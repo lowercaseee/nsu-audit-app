@@ -442,6 +442,7 @@ class ResultScreen extends StatelessWidget {
     final result = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
     final student = result?['student'] ?? {};
     final audit = result?['audit'] ?? {};
+    final courses = result?['courses'] as List<dynamic>? ?? [];
 
     return Scaffold(
       appBar: AppBar(title: const Text('Audit Result')),
@@ -471,10 +472,77 @@ class ResultScreen extends StatelessWidget {
                 Expanded(child: _buildStatCard('Status', audit['level3']?['eligible'] == true ? 'Eligible' : 'Not Eligible', audit['level3']?['eligible'] == true ? Colors.green : Colors.red)),
               ],
             ),
+            const SizedBox(height: 24),
+            Text('Courses (${courses.length})', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
+            if (courses.isEmpty)
+              const Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text('No courses found', style: TextStyle(color: Colors.grey)),
+                ),
+              )
+            else
+              ...courses.map((course) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: _buildCourseCard(course),
+              )),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildCourseCard(Map<String, dynamic> course) {
+    final gradeColor = _getGradeColor(course['grade'] ?? 'F');
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Container(
+              width: 50, height: 50,
+              decoration: BoxDecoration(
+                color: gradeColor.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(course['grade'] ?? 'F', style: TextStyle(fontWeight: FontWeight.bold, color: gradeColor, fontSize: 16)),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(course['code'] ?? '', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Text(course['semester'] ?? 'Unknown', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                ],
+              ),
+            ),
+            Text('${course['credits'] ?? 3} cr', style: const TextStyle(color: Colors.grey)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color _getGradeColor(String grade) {
+    switch (grade) {
+      case 'A+':
+      case 'A':
+      case 'A-':
+        return Colors.green;
+      case 'B+':
+      case 'B':
+      case 'B-':
+        return Colors.blue;
+      case 'C+':
+      case 'C':
+        return Colors.orange;
+      default:
+        return Colors.red;
+    }
   }
 
   Widget _buildInfoCard(String label, String value, IconData icon) {

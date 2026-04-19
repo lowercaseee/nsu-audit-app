@@ -132,4 +132,4 @@ def build_result(courses_data, audit_result):
 
 def get_demo_result():
     audit = audit_courses(DEMO_COURSES)
-    return build_result({'courses': DEMO_COURSES, 'student': {'name': 'Demo Student', 'id': '123456'}}, audit)
+    return build_result({'courses': DEMO_COURSES, 'student': {'name': 'Rahman Khan', 'id': '2012345'}}, audit)
