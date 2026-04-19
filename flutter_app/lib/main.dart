@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const NSUAuditApp());
@@ -322,6 +323,34 @@ class _HomeScreenState extends State<HomeScreen> {
   String _status = '';
   final _urlController = TextEditingController();
 
+  Future<void> _takePhoto() async {
+    try {
+      final picker = ImagePicker();
+      final result = await picker.pickImage(source: ImageSource.camera, imageQuality: 80);
+      if (result != null) {
+        final bytes = await result.readAsBytes();
+        final base64 = base64Encode(bytes);
+        _process(base64);
+      }
+    } catch (e) {
+      setState(() { _status = 'Error: ${e.toString()}'; });
+    }
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      final picker = ImagePicker();
+      final result = await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+      if (result != null) {
+        final bytes = await result.readAsBytes();
+        final base64 = base64Encode(bytes);
+        _process(base64);
+      }
+    } catch (e) {
+      setState(() { _status = 'Error: ${e.toString()}'; });
+    }
+  }
+
   Future<void> _uploadFromUrl() async {
     final url = _urlController.text.trim();
     if (url.isEmpty) {
@@ -382,51 +411,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: _loading 
         ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [const CircularProgressIndicator(color: Color(0xFF00D4FF)), const SizedBox(height: 16), Text(_status, style: const TextStyle(color: Colors.grey))]))
-        : SingleChildScrollView(
+        : Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Upload Transcript', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 8),
-                const Text('Enter image URL to process your transcript', style: TextStyle(color: Colors.grey)),
+                _buildFeatureCard(Icons.camera_alt, 'Capture Transcript', 'Take photo of your transcript', _takePhoto),
                 const SizedBox(height: 16),
-                TextField(
-                  controller: _urlController,
-                  decoration: const InputDecoration(
-                    hintText: 'https://example.com/transcript.jpg',
-                    prefixIcon: Icon(Icons.link),
-                  ),
-                ),
+                _buildFeatureCard(Icons.photo_library, 'Choose from Gallery', 'Select an image from gallery', _pickImage),
                 const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _uploadFromUrl,
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.upload),
-                        SizedBox(width: 12),
-                        Text('Process Transcript'),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 32),
-                const Divider(),
+                _buildFeatureCard(Icons.link, 'Upload via URL', 'Enter image URL to process', _uploadFromUrl),
                 const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: _loadDemo,
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Color(0xFF00D4FF)),
-                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                    ),
-                    child: const Text('View Demo Result', style: TextStyle(color: Color(0xFF00D4FF))),
-                  ),
-                ),
+                _buildFeatureCard(Icons.preview, 'View Demo Result', 'See sample audit result', _loadDemo),
               ],
             ),
           ),
