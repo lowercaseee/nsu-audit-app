@@ -84,10 +84,11 @@ class ApiService {
   }
 
   static Future<dynamic> processTranscript({String? imageBase64}) async {
+    final body = imageBase64 != null ? jsonEncode({'image': imageBase64}) : '{}';
     final response = await http.post(
       Uri.parse('$serverUrl/process-transcript'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'image': imageBase64}),
+      body: body,
     );
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
@@ -319,16 +320,44 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool _loading = false;
   String _status = '';
+  final _urlController = TextEditingController();
 
-  Future<void> _loadDemo() async {
-    setState(() { _loading = true; _status = 'Loading demo...'; });
+  Future<void> _uploadFromUrl() async {
+    final url = _urlController.text.trim();
+    if (url.isEmpty) {
+      setState(() { _status = 'Please enter an image URL'; });
+      return;
+    }
+    setState(() { _loading = true; _status = 'Fetching image...'; });
     try {
-      final result = await ApiService.processTranscript();
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final base64 = base64Encode(response.bodyBytes);
+        _process(base64);
+      } else {
+        setState(() { _status = 'Failed to fetch image'; });
+      }
+    } catch (e) {
+      setState(() { _status = 'Error: ${e.toString()}'; });
+    }
+    setState(() { _loading = false; });
+  }
+
+  Future<void> _process(String base64) async {
+    setState(() { _loading = true; _status = 'Processing...'; });
+    try {
+      final result = await ApiService.processTranscript(imageBase64: base64);
       if (mounted) Navigator.pushNamed(context, '/result', arguments: result);
     } catch (e) {
       setState(() { _status = 'Error: ${e.toString()}'; });
     }
     setState(() { _loading = false; });
+  }
+
+  @override
+  void dispose() {
+    _urlController.dispose();
+    super.dispose();
   }
 
   @override
@@ -346,8 +375,34 @@ class _HomeScreenState extends State<HomeScreen> {
         : Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildFeatureCard(Icons.preview, 'View Demo Result', 'See sample audit result', _loadDemo),
+                const Text('Upload Transcript', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                const Text('Enter image URL to process your transcript', style: TextStyle(color: Colors.grey)),
+                const SizedBox(height: 24),
+                TextField(
+                  controller: _urlController,
+                  decoration: const InputDecoration(
+                    hintText: 'https://example.com/transcript.jpg',
+                    prefixIcon: Icon(Icons.link),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _uploadFromUrl,
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.upload),
+                        SizedBox(width: 12),
+                        Text('Process Transcript'),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
