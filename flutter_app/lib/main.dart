@@ -474,6 +474,24 @@ class _HomeScreenState extends State<HomeScreen> {
     if (mounted) setState(() => _loading = false);
   }
 
+  Future<void> _loadDemoResult() async {
+    setState(() {
+      _loading = true;
+      _status = 'Loading demo...';
+    });
+    try {
+      final result = await ApiService.processTranscript();
+      if (mounted) Navigator.pushNamed(context, '/result', arguments: result);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}')),
+        );
+      }
+    }
+    if (mounted) setState(() => _loading = false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -509,6 +527,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: _pickImage,
                       style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(18)),
                       child: const Text('Choose from Gallery', style: TextStyle(fontSize: 16, color: Color(0xFF003366))),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: _loadDemoResult,
+                      style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(18)),
+                      child: const Text('View Demo Result', style: TextStyle(fontSize: 16, color: Colors.orange)),
                     ),
                   ),
                 ],

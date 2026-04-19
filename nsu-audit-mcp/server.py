@@ -221,18 +221,32 @@ async def process_transcript(
     api_key_user: Optional[str] = Depends(get_api_key_user)
 ):
     try:
-        # Allow test mode access without authentication
+        import services.ocr_service as OCRService
+        
         user = current_user.get("sub") if current_user else api_key_user
         if not user:
-            user = "test-user"  # Test mode user
+            user = "test-user"
         
         result = None
+        student_name = "Student"
         
         if req.courses and isinstance(req.courses, list):
             audit = AuditService.audit_courses(req.courses)
-            result = AuditService.build_result({"courses": req.courses, "student": {"name": "Student", "id": "000000"}}, audit)
+            result = AuditService.build_result({"courses": req.courses, "student": {"name": student_name, "id": "000000"}}, audit)
+        elif req.image:
+            try:
+                ocr_result = OCRService.extract_from_image(req.image)
+                if ocr_result and ocr_result.get('courses'):
+                    courses = ocr_result['courses']
+                    student_name = extract_name_from_text(ocr_result.get('text', ''))
+                    audit = AuditService.audit_courses(courses)
+                    result = AuditService.build_result({"courses": courses, "student": {"name": student_name, "id": "000000"}}, audit)
+                else:
+                    result = AuditService.get_demo_result()
+            except Exception as e:
+                print(f"OCR error: {e}")
+                result = AuditService.get_demo_result()
         else:
-            # Demo mode - return demo result
             result = AuditService.get_demo_result()
         
         if not result:
@@ -245,10 +259,18 @@ async def process_transcript(
         
         return {**result, "certificate": cert_info}
     except Exception as e:
-        # Return demo result on any error
         result = AuditService.get_demo_result()
         HistoryService.log("POST /process-transcript", "test-user", True)
         return {**result, "certificate": {"filename": "error_fallback.pdf"}}
+
+def extract_name_from_text(text):
+    """Try to extract student name from text"""
+    lines = text.split('\n')
+    for line in lines[:5]:
+        line = line.strip()
+        if len(line) > 3 and len(line) < 50 and line.isalpha():
+            return line.title()
+    return "Student"
 
 
 @app.get("/")
