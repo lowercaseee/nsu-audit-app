@@ -235,13 +235,35 @@ async def process_transcript(
         elif req.image:
             try:
                 ocr_result = await OCRService.extract_from_image(req.image)
-                if ocr_result and ocr_result.get('courses') and len(ocr_result['courses']) > 0:
-                    courses = ocr_result['courses']
-                    student_info = ocr_result.get('student', {})
-                    student_name = student_info.get('name', 'NSU Student')
-                    student_id = student_info.get('id', '123456')
-                    audit = AuditService.audit_courses(courses)
-                    result = AuditService.build_result({"courses": courses, "student": {"name": student_name, "id": student_id}}, audit)
+                
+                if ocr_result and ocr_result.get('success'):
+                    # Extract all components from new unified OCR response
+                    student_info = ocr_result.get('student_info', {})
+                    summary = ocr_result.get('summary', {})
+                    graduation = ocr_result.get('graduation', {})
+                    semesters = ocr_result.get('semesters', [])
+                    
+                    # Flatten courses from semesters for audit
+                    all_courses = []
+                    for sem in semesters:
+                        all_courses.extend(sem.get('courses', []))
+                    
+                    if all_courses:
+                        student_name = student_info.get('name', 'NSU Student')
+                        student_id = student_info.get('student_id', '123456')
+                        audit = AuditService.audit_courses(all_courses)
+                        result = AuditService.build_result({
+                            "courses": all_courses,
+                            "student": {"name": student_name, "id": student_id}
+                        }, audit)
+                        
+                        # Add all OCR data to result
+                        result['student_info'] = student_info
+                        result['summary'] = summary
+                        result['graduation'] = graduation
+                        result['semesters'] = semesters
+                    else:
+                        result = AuditService.get_demo_result()
                 else:
                     result = AuditService.get_demo_result()
             except Exception as e:
