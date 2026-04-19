@@ -437,7 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final result = await picker.pickImage(source: ImageSource.camera, imageQuality: 80);
     if (result != null) {
       final bytes = await result.readAsBytes();
-      final base64 = 'data:image/jpeg;base64,${bytes.toString()}';
+      final base64 = base64Encode(bytes);
       _processImage(base64);
     }
   }
@@ -447,23 +447,27 @@ class _HomeScreenState extends State<HomeScreen> {
     final result = await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
     if (result != null) {
       final bytes = await result.readAsBytes();
-      final base64 = 'data:image/jpeg;base64,${bytes.toString()}';
+      final base64 = base64Encode(bytes);
       _processImage(base64);
     }
   }
 
-  Future<void> _processImage(String base64) async {
+  Future<void> _processImage(base64) async {
     setState(() {
       _loading = true;
-      _status = 'Processing...';
+      _status = 'Processing image...';
     });
     try {
+      _status = 'Sending to server...';
+      setState(() {});
       final result = await ApiService.processTranscript(imageBase64: base64);
+      _status = 'Got result!';
       if (mounted) Navigator.pushNamed(context, '/result', arguments: result);
     } catch (e) {
+      _status = 'Error: ${e.toString()}';
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${e.toString()}')),
+          SnackBar(content: Text(_status), duration: const Duration(seconds: 5)),
         );
       }
     }
