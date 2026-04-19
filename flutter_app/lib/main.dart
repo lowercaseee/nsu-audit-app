@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const NSUAuditApp());
@@ -79,17 +77,10 @@ class NSUAuditApp extends StatelessWidget {
 
 class ApiService {
   static String serverUrl = 'https://nsu-audit-app-8nj0.onrender.com';
-  static String? apiKey;
-
-  static Future<void> init() async {
-    final prefs = await SharedPreferences.getInstance();
-    apiKey = prefs.getString('apiKey');
-  }
 
   static Future<dynamic> loginWithGoogle() async {
     await Future.delayed(const Duration(seconds: 1));
-    apiKey = 'test-token';
-    return {'token': apiKey, 'user': {'name': 'Test User'}};
+    return {'token': 'test-token', 'user': {'name': 'Test User'}};
   }
 
   static Future<dynamic> processTranscript({String? imageBase64}) async {
@@ -329,39 +320,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loading = false;
   String _status = '';
 
-  Future<void> _takePhoto() async {
-    final picker = ImagePicker();
-    final result = await picker.pickImage(source: ImageSource.camera, imageQuality: 80);
-    if (result != null) {
-      final bytes = await result.readAsBytes();
-      final base64 = base64Encode(bytes);
-      _process(base64);
-    }
-  }
-
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final result = await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
-    if (result != null) {
-      final bytes = await result.readAsBytes();
-      final base64 = base64Encode(bytes);
-      _process(base64);
-    }
-  }
-
-  Future<void> _process(String base64) async {
-    setState(() { _loading = true; _status = 'Processing...'; });
-    try {
-      final result = await ApiService.processTranscript(imageBase64: base64);
-      if (mounted) Navigator.pushNamed(context, '/result', arguments: result);
-    } catch (e) {
-      setState(() { _status = 'Error: ${e.toString()}'; });
-    }
-    setState(() { _loading = false; });
-  }
-
   Future<void> _loadDemo() async {
-    setState(() { _loading = true; });
+    setState(() { _loading = true; _status = 'Loading demo...'; });
     try {
       final result = await ApiService.processTranscript();
       if (mounted) Navigator.pushNamed(context, '/result', arguments: result);
@@ -384,17 +344,13 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _loading 
         ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [const CircularProgressIndicator(color: Color(0xFF00D4FF)), const SizedBox(height: 16), Text(_status, style: const TextStyle(color: Colors.grey))]))
         : Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              _buildFeatureCard(Icons.camera_alt, 'Capture Transcript', 'Take photo of your transcript', _takePhoto),
-              const SizedBox(height: 16),
-              _buildFeatureCard(Icons.photo_library, 'Choose from Gallery', 'Select an image from gallery', _pickImage),
-              const SizedBox(height: 16),
-              _buildFeatureCard(Icons.preview, 'View Demo Result', 'See sample audit result', _loadDemo),
-            ],
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              children: [
+                _buildFeatureCard(Icons.preview, 'View Demo Result', 'See sample audit result', _loadDemo),
+              ],
+            ),
           ),
-        ),
     );
   }
 
@@ -493,6 +449,41 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildInfoCard(String label, String value, IconData icon) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Icon(icon, color: const Color(0xFF00D4FF)),
+            const SizedBox(width: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatCard(String label, String value, Color color) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(value, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: color)),
+            Text(label, style: const TextStyle(color: Colors.grey)),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildCourseCard(Map<String, dynamic> course) {
     final gradeColor = _getGradeColor(course['grade'] ?? 'F');
     return Card(
@@ -543,41 +534,6 @@ class ResultScreen extends StatelessWidget {
       default:
         return Colors.red;
     }
-  }
-
-  Widget _buildInfoCard(String label, String value, IconData icon) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Icon(icon, color: const Color(0xFF00D4FF)),
-            const SizedBox(width: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-                Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatCard(String label, String value, Color color) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Text(value, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: color)),
-            Text(label, style: const TextStyle(color: Colors.grey)),
-          ],
-        ),
-      ),
-    );
   }
 }
 
