@@ -78,7 +78,7 @@ def get_valid_courses(courses):
 
 def total_credits(courses):
     valid = get_valid_courses(courses)
-    return sum(int(c.get('credits', 0)) for c in valid)
+    return sum(int(c.get('credits', 0) or 0) for c in valid)
 
 
 def calculate_cgpa(courses):
@@ -86,7 +86,7 @@ def calculate_cgpa(courses):
     grade_points = 0.0
     credits = 0
     for c in valid:
-        credits_val = c.get('credits', 0)
+        credits_val = c.get('credits', 0) or 0
         if credits_val > 0:
             grade = clean_grade(c.get('grade'))
             grade_points += GRADE_POINTS.get(grade, 0.0) * credits_val
