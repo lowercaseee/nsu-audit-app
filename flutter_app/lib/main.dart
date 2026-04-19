@@ -335,8 +335,18 @@ class _HomeScreenState extends State<HomeScreen> {
         final base64 = base64Encode(response.bodyBytes);
         _process(base64);
       } else {
-        setState(() { _status = 'Failed to fetch image'; });
+        setState(() { _status = 'Failed to fetch image'; _loading = false; });
       }
+    } catch (e) {
+      setState(() { _status = 'Error: ${e.toString()}'; _loading = false; });
+    }
+  }
+
+  Future<void> _loadDemo() async {
+    setState(() { _loading = true; _status = 'Loading demo...'; });
+    try {
+      final result = await ApiService.processTranscript();
+      if (mounted) Navigator.pushNamed(context, '/result', arguments: result);
     } catch (e) {
       setState(() { _status = 'Error: ${e.toString()}'; });
     }
@@ -372,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: _loading 
         ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [const CircularProgressIndicator(color: Color(0xFF00D4FF)), const SizedBox(height: 16), Text(_status, style: const TextStyle(color: Colors.grey))]))
-        : Padding(
+        : SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -380,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Text('Upload Transcript', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),
                 const Text('Enter image URL to process your transcript', style: TextStyle(color: Colors.grey)),
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
                 TextField(
                   controller: _urlController,
                   decoration: const InputDecoration(
@@ -401,6 +411,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text('Process Transcript'),
                       ],
                     ),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                const Divider(),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: _loadDemo,
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Color(0xFF00D4FF)),
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    ),
+                    child: const Text('View Demo Result', style: TextStyle(color: Color(0xFF00D4FF))),
                   ),
                 ),
               ],
