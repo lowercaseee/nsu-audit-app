@@ -228,6 +228,7 @@ async def process_transcript(
             user = "test-user"
         
         result = None
+        ocr_result = {}
         
         if req.courses and isinstance(req.courses, list):
             audit = AuditService.audit_courses(req.courses)
@@ -278,6 +279,17 @@ async def process_transcript(
         pdf_bytes = f"Certificate for {result.get('student', {}).get('name', 'Student')}".encode('utf-8')
         cert_info = CertificateService.save(user, pdf_bytes, result.get("student", {}).get("name", "student"))
         
+        # Save transcript to history
+        student_id = result.get('student', {}).get('id', '000000')
+        student_name = result.get('student', {}).get('name', 'NSU Student')
+        HistoryService.save_transcript(
+            student_id=student_id,
+            student_name=student_name,
+            ocr_data=ocr_result if req.image else {},
+            audit_data=result,
+            user=user
+        )
+        
         HistoryService.log("POST /process-transcript", user, True)
         
         return {**result, "certificate": cert_info}
@@ -290,6 +302,30 @@ async def process_transcript(
 @app.get("/")
 def root():
     return {"message": "NSU Audit API", "version": "2.0.0"}
+
+
+# Transcript History Endpoints
+
+@app.get("/transcripts")
+def get_all_transcripts():
+    """Get list of all students with transcripts"""
+    return {"students": HistoryService.get_all_students()}
+
+
+@app.get("/transcripts/{student_id}")
+def get_student_transcripts(student_id: str):
+    """Get all transcripts for a specific student"""
+    transcripts = HistoryService.get_transcripts_by_student(student_id)
+    return {"student_id": student_id, "transcripts": transcripts}
+
+
+@app.get("/transcripts/{student_id}/latest")
+def get_latest_transcript(student_id: str):
+    """Get the most recent transcript for a student"""
+    transcript = HistoryService.get_latest_transcript(student_id)
+    if transcript:
+        return {"transcript": transcript}
+    return {"error": "No transcript found", "transcript": None}
 
 
 if __name__ == "__main__":
