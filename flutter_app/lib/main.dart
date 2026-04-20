@@ -118,6 +118,28 @@ class ApiService {
     }
     return [];
   }
+
+  static Future<List<dynamic>> getAllTranscripts() async {
+    final response = await http.get(
+      Uri.parse('$serverUrl/transcripts'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)['students'] ?? [];
+    }
+    return [];
+  }
+
+  static Future<dynamic> getLatestTranscript(String studentId) async {
+    final response = await http.get(
+      Uri.parse('$serverUrl/transcripts/$studentId/latest'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)['transcript'];
+    }
+    return null;
+  }
 }
 
 class Student {
@@ -577,40 +599,106 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  List<dynamic> _history = [];
+  List<dynamic> _transcripts = [];
+  bool _loading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadHistory();
+    _loadTranscripts();
   }
 
-  Future<void> _loadHistory() async {
-    final history = await ApiService.getHistory();
-    setState(() => _history = history);
+  Future<void> _loadTranscripts() async {
+    setState(() => _loading = true);
+    final transcripts = await ApiService.getAllTranscripts();
+    setState(() {
+      _transcripts = transcripts;
+      _loading = false;
+    });
+  }
+
+  Future<void> _loadTranscript(String studentId) async {
+    final transcript = await ApiService.getLatestTranscript(studentId);
+    if (transcript != null && mounted) {
+      Navigator.pushNamed(context, '/result', arguments: transcript['audit_data']);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('History')),
-      body: _history.isEmpty 
-        ? const Center(child: Text('No history yet', style: TextStyle(color: Colors.grey)))
-        : ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: _history.length,
-            itemBuilder: (ctx, i) {
-              final item = _history[i];
-              return Card(
-                child: ListTile(
-                  leading: Icon(item['status'] == true ? Icons.check_circle : Icons.cancel, color: item['status'] == true ? Colors.green : Colors.red),
-                  title: Text(item['endpoint'] ?? ''),
-                  subtitle: Text(item['timestamp'] ?? ''),
-                ),
-              );
-            },
-          ),
+      appBar: AppBar(title: const Text('Transcript History')),
+      body: _loading
+        ? const Center(child: CircularProgressIndicator(color: Color(0xFF00D4FF)))
+        : _transcripts.isEmpty 
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.history, size: 64, color: Colors.grey),
+                  const SizedBox(height: 16),
+                  const Text('No transcripts yet', style: TextStyle(color: Colors.grey)),
+                  const SizedBox(height: 24),
+                  const Text('Scan a transcript to get started', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                ],
+              ),
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: _transcripts.length,
+              itemBuilder: (ctx, i) {
+                final item = _transcripts[i];
+                return Card(
+                  child: InkWell(
+                    onTap: () => _loadTranscript(item['student_id']),
+                    borderRadius: BorderRadius.circular(16),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 48, height: 48,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(colors: [Color(0xFF00D4FF), Color(0xFF7B61FF)]),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(Icons.person, color: Colors.white),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(item['student_name'] ?? 'Unknown', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                Text('ID: ${item['student_id'] ?? ''}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text('CGPA: ${item['cgpa'] ?? '0.0'}', style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF00D4FF))),
+                              Text(_formatDate(item['timestamp'] ?? ''), style: const TextStyle(color: Colors.grey, fontSize: 10)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
     );
+  }
+
+  String _formatDate(String timestamp) {
+    if (timestamp.isEmpty) return '';
+    try {
+      final dt = DateTime.parse(timestamp);
+      return '${dt.day}/${dt.month}/${dt.year}';
+    } catch (e) {
+      return timestamp.substring(0, 10);
+    }
   }
 }
 
