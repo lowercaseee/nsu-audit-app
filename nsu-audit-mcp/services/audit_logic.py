@@ -8,7 +8,7 @@ NON_EARNING = ['F', 'W', 'I', 'Z', 'Cr']
 
 PROGRAM = {
     'name': 'BBA',
-    'totalCredits': 120,
+    'totalCredits': 122,
     'mandatoryGed': ['ENG101', 'ENG102', 'ENG111', 'ENG112'],
     'coreMath': ['MAT101', 'MAT104', 'STA101'],
     'coreBusiness': ['BUS101', 'BUS201', 'BUS251', 'BUS301', 'BUS401'],
@@ -42,6 +42,19 @@ DEMO_COURSES = [
     {'code': 'BUS401', 'grade': 'A', 'credits': 3, 'semester': 'Spring 2010'},
     {'code': 'MGT401', 'grade': 'A', 'credits': 3, 'semester': 'Spring 2010'},
     {'code': 'BUS498', 'grade': 'A', 'credits': 3, 'semester': 'Summer 2010'},
+    {'code': 'ENG111', 'grade': 'A', 'credits': 3, 'semester': 'Fall 2010'},
+    {'code': 'ENG112', 'grade': 'A', 'credits': 3, 'semester': 'Fall 2010'},
+    {'code': 'ACT301', 'grade': 'A', 'credits': 3, 'semester': 'Fall 2010'},
+    {'code': 'MGT305', 'grade': 'A', 'credits': 3, 'semester': 'Spring 2011'},
+    {'code': 'FIN350', 'grade': 'A', 'credits': 3, 'semester': 'Spring 2011'},
+    {'code': 'BUS305', 'grade': 'A', 'credits': 3, 'semester': 'Spring 2011'},
+    {'code': 'MKT301', 'grade': 'A', 'credits': 3, 'semester': 'Summer 2011'},
+    {'code': 'ECO201', 'grade': 'A', 'credits': 3, 'semester': 'Summer 2011'},
+    {'code': 'LAW300', 'grade': 'A', 'credits': 3, 'semester': 'Summer 2011'},
+    {'code': 'ACT305', 'grade': 'A', 'credits': 3, 'semester': 'Fall 2011'},
+    {'code': 'FIN401', 'grade': 'A', 'credits': 3, 'semester': 'Fall 2011'},
+    {'code': 'MGT410', 'grade': 'A', 'credits': 3, 'semester': 'Fall 2011'},
+    {'code': 'BUS498', 'grade': 'A', 'credits': 3, 'semester': 'Spring 2012'},
 ]
 
 def get_grade_points(grade):

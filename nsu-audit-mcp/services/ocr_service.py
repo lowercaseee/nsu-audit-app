@@ -268,7 +268,7 @@ def determine_graduation(summary: Dict[str, str]) -> Dict[str, Any]:
     credits_counted = int(summary.get('credits_counted', 0) or 0)
     degree_completed = summary.get('degree_completed', '')
     
-    graduated = credits_passed >= 120 or credits_counted >= 120
+    graduated = credits_passed >= 122 or credits_counted >= 122
     
     year_match = re.search(r'(\d{4})', degree_completed)
     graduation_year = year_match.group(1) if year_match else ''
