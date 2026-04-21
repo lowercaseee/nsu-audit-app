@@ -132,6 +132,6 @@ def get_all_students() -> List[Dict]:
                 "student_id": student_id,
                 "student_name": latest.get("student_name", "Unknown"),
                 "timestamp": latest.get("timestamp", ""),
-                "cgpa": latest.get("audit_data", {}).get("level2", {}).get("cgpa", 0)
+                "cgpa": latest.get("audit_data", {}).get("audit", {}).get("level2", {}).get("cgpa", 0)
             })
     return result

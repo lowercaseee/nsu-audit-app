@@ -55,6 +55,8 @@ DEMO_COURSES = [
     {'code': 'FIN401', 'grade': 'A', 'credits': 3, 'semester': 'Fall 2011'},
     {'code': 'MGT410', 'grade': 'A', 'credits': 3, 'semester': 'Fall 2011'},
     {'code': 'BUS498', 'grade': 'A', 'credits': 3, 'semester': 'Spring 2012'},
+    {'code': 'MGT499', 'grade': 'A', 'credits': 3, 'semester': 'Spring 2012'},
+    {'code': 'FIN499', 'grade': 'A', 'credits': 3, 'semester': 'Spring 2012'},
 ]
 
 def get_grade_points(grade):
